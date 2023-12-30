@@ -1,11 +1,9 @@
 package com.iffat.spring6.restmvc.entities;
 
 import com.iffat.spring6.restmvc.model.BeerStyle;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Version;
+import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.UuidGenerator;
 
 import java.math.BigDecimal;
