@@ -47,8 +47,6 @@ class CustomerControllerTest {
         customerServiceImpl = new CustomerServiceImpl();
     }
 
-
-
     @Test
     void testDeleteCustomers() throws Exception {
         Customer customer = customerServiceImpl.getAllCustomers().get(0);
