@@ -3,6 +3,7 @@ package com.iffat.spring6.restmvc.controller;
 import com.iffat.spring6.restmvc.model.Beer;
 import com.iffat.spring6.restmvc.services.BeerService;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpHeaders;
@@ -14,7 +15,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Slf4j
-@AllArgsConstructor
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/v1/beers")
 public class BeerController {
