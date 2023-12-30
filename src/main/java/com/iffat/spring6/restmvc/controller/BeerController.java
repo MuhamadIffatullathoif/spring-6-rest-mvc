@@ -55,13 +55,6 @@ public class BeerController {
         return new ResponseEntity(headers, HttpStatus.CREATED);
     }
 
-    @ExceptionHandler(NotFoundException.class)
-    public ResponseEntity handleNotFoundException() {
-        System.out.println("In exception handler");
-
-        return ResponseEntity.notFound().build();
-    }
-
     @GetMapping(BEER_PATH)
     public List<Beer> listBeers() {
         return beerService.listBeers();
