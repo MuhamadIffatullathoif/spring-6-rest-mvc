@@ -21,10 +21,18 @@ public class BeerController {
 
     private final BeerService beerService;
 
-    @PutMapping("{bearId}")
-    public ResponseEntity updateById(@PathVariable UUID bearId, @RequestBody Beer beer) {
+    @DeleteMapping("{beerId}")
+    public ResponseEntity deleteBeerById(@PathVariable UUID beerId) {
 
-        beerService.updateBeerById(bearId, beer);
+        beerService.deleteBeerById(beerId);
+
+        return new ResponseEntity(HttpStatus.NO_CONTENT);
+    }
+
+    @PutMapping("{beerId}")
+    public ResponseEntity updateBeerById(@PathVariable("beerId") UUID beerId, @RequestBody Beer beer) {
+
+        beerService.updateBeerById(beerId, beer);
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
