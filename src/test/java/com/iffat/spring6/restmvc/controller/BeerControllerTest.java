@@ -1,5 +1,7 @@
 package com.iffat.spring6.restmvc.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.iffat.spring6.restmvc.model.Beer;
 import com.iffat.spring6.restmvc.services.BeerService;
 import com.iffat.spring6.restmvc.services.BeerServiceImpl;
@@ -24,7 +26,16 @@ class BeerControllerTest {
     @MockBean
     BeerService beerService;
 
+    @Autowired
+    ObjectMapper objectMapper;
+
     BeerServiceImpl beerServiceImpl = new BeerServiceImpl();
+
+    @Test
+    void testCreateNewBeers() throws JsonProcessingException {
+        Beer beer = beerServiceImpl.listBeers().get(0);
+        System.out.println(objectMapper.writeValueAsString(beer));
+    }
 
     @Test
     void testListBeers() throws Exception {
