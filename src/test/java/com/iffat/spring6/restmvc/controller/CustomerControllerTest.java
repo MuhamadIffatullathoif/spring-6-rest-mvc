@@ -1,8 +1,8 @@
 package com.iffat.spring6.restmvc.controller;
 
-import com.iffat.spring6.restmvc.model.Beer;
-import com.iffat.spring6.restmvc.services.BeerService;
-import com.iffat.spring6.restmvc.services.BeerServiceImpl;
+import com.iffat.spring6.restmvc.model.Customer;
+import com.iffat.spring6.restmvc.services.CustomerService;
+import com.iffat.spring6.restmvc.services.CustomerServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -15,22 +15,22 @@ import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@WebMvcTest(BeerController.class)
-class BeerControllerTest {
+@WebMvcTest(CustomerController.class)
+class CustomerControllerTest {
+
+    @MockBean
+    CustomerService customerService;
 
     @Autowired
     MockMvc mockMvc;
 
-    @MockBean
-    BeerService beerService;
-
-    BeerServiceImpl beerServiceImpl = new BeerServiceImpl();
+    CustomerServiceImpl customerServiceImpl = new CustomerServiceImpl();
 
     @Test
-    void testListBeers() throws Exception {
-        given(beerService.listBeers()).willReturn(beerServiceImpl.listBeers());
+    void listAlLCustomer() throws Exception {
+        given(customerService.getAllCustomers()).willReturn(customerServiceImpl.getAllCustomers());
 
-        mockMvc.perform(get("/api/v1/beers")
+        mockMvc.perform(get("/api/v1/customers")
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
@@ -38,16 +38,15 @@ class BeerControllerTest {
     }
 
     @Test
-    void getBeerById() throws Exception {
-        Beer testBeer = beerServiceImpl.listBeers().get(0);
+    void getCustomerById() throws Exception {
+        Customer customer = customerServiceImpl.getAllCustomers().get(0);
 
-        given(beerService.getBeerById(testBeer.getId())).willReturn(testBeer);
+        given(customerService.getCustomerById(customer.getId())).willReturn(customer);
 
-        mockMvc.perform(get("/api/v1/beers/" + testBeer.getId())
+        mockMvc.perform(get("/api/v1/customers/" + customer.getId())
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.id", is(testBeer.getId().toString())))
-                .andExpect(jsonPath("$.beerName", is(testBeer.getBeerName())));
+                .andExpect(jsonPath("$.name", is(customer.getName())));
     }
 }
