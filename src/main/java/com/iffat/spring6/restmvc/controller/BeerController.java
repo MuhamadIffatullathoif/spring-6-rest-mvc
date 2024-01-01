@@ -1,6 +1,7 @@
 package com.iffat.spring6.restmvc.controller;
 
 import com.iffat.spring6.restmvc.model.BeerDTO;
+import com.iffat.spring6.restmvc.model.BeerStyle;
 import com.iffat.spring6.restmvc.services.BeerService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -40,7 +41,7 @@ public class BeerController {
     }
 
     @PutMapping(BEER_PATH_ID)
-    public ResponseEntity updateBeerById(@PathVariable("beerId") UUID beerId,@Validated @RequestBody BeerDTO beer) {
+    public ResponseEntity updateBeerById(@PathVariable("beerId") UUID beerId, @Validated @RequestBody BeerDTO beer) {
 
         if (beerService.updateBeerById(beerId, beer).isEmpty()) {
             throw new NotFoundException();
@@ -60,8 +61,9 @@ public class BeerController {
     }
 
     @GetMapping(BEER_PATH)
-    public List<BeerDTO> listBeers(@RequestParam(required = false) String beerName) {
-        return beerService.listBeers(beerName);
+    public List<BeerDTO> listBeers(@RequestParam(required = false) String beerName,
+                                   @RequestParam(required = false) BeerStyle beerStyle) {
+        return beerService.listBeers(beerName, beerStyle);
     }
 
     @GetMapping(BEER_PATH_ID)
