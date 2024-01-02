@@ -1,6 +1,7 @@
 package com.iffat.spring6.restmvc.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.iffat.spring6.restmvc.config.SpringSecurityConfig;
 import com.iffat.spring6.restmvc.model.BeerDTO;
 import com.iffat.spring6.restmvc.services.BeerService;
 import com.iffat.spring6.restmvc.services.BeerServiceImpl;
@@ -12,6 +13,7 @@ import org.mockito.Captor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
@@ -31,6 +33,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(BeerController.class)
+@Import(SpringSecurityConfig.class)
 class BeerControllerTest {
 
     @Autowired
@@ -165,7 +168,7 @@ class BeerControllerTest {
 
         mockMvc.perform(get(BeerController.BEER_PATH_ID, testBeer.getId())
                         .accept(MediaType.APPLICATION_JSON)
-                        .with(httpBasic("user1","password")))
+                        .with(httpBasic("user1", "password")))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.id", is(testBeer.getId().toString())))
@@ -181,7 +184,8 @@ class BeerControllerTest {
         MvcResult mvcResult = mockMvc.perform(post(BeerController.BEER_PATH)
                         .accept(MediaType.APPLICATION_JSON)
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(beerDTO)))
+                        .content(objectMapper.writeValueAsString(beerDTO))
+                        .with(httpBasic("user1", "password")))
                 .andExpect(jsonPath("$.length()", is(6)))
                 .andExpect(status().isBadRequest()).andReturn();
         System.out.println(mvcResult.getResponse().getContentAsString());
