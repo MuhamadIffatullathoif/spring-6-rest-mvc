@@ -28,7 +28,7 @@ public class BeerOrder {
         this.customerRef = customerRef;
         this.beerOrderLines = beerOrderLines;
         this.setCustomer(customer);
-        this.beerOrderShipment = beerOrderShipment;
+        this.setBeerOrderShipment(beerOrderShipment);
     }
 
     @Id
@@ -64,6 +64,11 @@ public class BeerOrder {
         customer.getBeerOrders().add(this);
     }
 
-    @OneToOne
+    public void setBeerOrderShipment(BeerOrderShipment beerOrderShipment) {
+        this.beerOrderShipment = beerOrderShipment;
+        beerOrderShipment.setBeerOrder(this);
+    }
+
+    @OneToOne(cascade = CascadeType.PERSIST)
     private BeerOrderShipment beerOrderShipment;
 }
