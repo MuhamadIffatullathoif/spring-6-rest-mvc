@@ -19,7 +19,8 @@ import java.util.UUID;
 @Builder
 public class BeerOrder {
 
-    public BeerOrder(UUID id, Long version, Timestamp createdDate, Timestamp lastModifiedDate, String customerRef, Set<BeerOrderLine> beerOrderLines, Customer customer) {
+    public BeerOrder(UUID id, Long version, Timestamp createdDate, Timestamp lastModifiedDate, String customerRef,
+                     Set<BeerOrderLine> beerOrderLines, Customer customer, BeerOrderShipment beerOrderShipment) {
         this.id = id;
         this.version = version;
         this.createdDate = createdDate;
@@ -27,6 +28,7 @@ public class BeerOrder {
         this.customerRef = customerRef;
         this.beerOrderLines = beerOrderLines;
         this.setCustomer(customer);
+        this.beerOrderShipment = beerOrderShipment;
     }
 
     @Id
@@ -61,4 +63,7 @@ public class BeerOrder {
         this.customer = customer;
         customer.getBeerOrders().add(this);
     }
+
+    @OneToOne
+    private BeerOrderShipment beerOrderShipment;
 }
